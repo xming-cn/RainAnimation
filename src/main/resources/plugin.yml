@@ -1,0 +1,4 @@
+name: RainAnimation
+version: '${project.version}'
+main: saracraft.rainanimation.RainAnimation
+api-version: 1.16
