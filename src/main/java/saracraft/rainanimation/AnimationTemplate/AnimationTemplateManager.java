@@ -20,6 +20,7 @@ public class AnimationTemplateManager {
     }
 
     public void register(AnimationTemplate template) {
+        RainAnimation.plugins.getLogger().info("register template " + template.identifier + " :" + template);
         templates.put(template.identifier, template);
     }
 

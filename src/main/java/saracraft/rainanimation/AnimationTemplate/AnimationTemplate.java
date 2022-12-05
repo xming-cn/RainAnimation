@@ -21,4 +21,12 @@ public class AnimationTemplate {
         File configFile = new File(this.path);
         this.config = YamlConfiguration.loadConfiguration(configFile);
     }
+
+    @Override
+    public String toString() {
+        return "AnimationTemplate{" +
+                "identifier='" + identifier + '\'' +
+                ", path='" + path + '\'' +
+                '}';
+    }
 }
