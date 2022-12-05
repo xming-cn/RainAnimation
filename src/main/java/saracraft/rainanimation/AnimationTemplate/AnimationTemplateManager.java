@@ -57,6 +57,9 @@ public class AnimationTemplateManager {
         return files;
     }
 
+    public HashMap<String, AnimationTemplate> getTemplates() {
+        return templates;
+    }
 
     @Nullable public AnimationTemplate getTemplate(String identifier) {
         return templates.getOrDefault(identifier, null);

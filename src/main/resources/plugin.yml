@@ -2,3 +2,10 @@ name: RainAnimation
 version: '${project.version}'
 main: saracraft.rainanimation.RainAnimation
 api-version: 1.16
+
+commands:
+  RainAnimation:
+    aliases: [ra]
+    permission: "RainAnimation.command.main"
+    permission-message: "你没有使用该命令的权限"
+    description: "main command of Plugin Rain Animation"
