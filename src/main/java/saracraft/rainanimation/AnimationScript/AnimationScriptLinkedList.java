@@ -1,6 +1,7 @@
 package saracraft.rainanimation.AnimationScript;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AnimationScriptLinkedList {
     private static class Note {
@@ -27,7 +28,19 @@ public class AnimationScriptLinkedList {
             this.value = value;
         }
     }
-    Note current;
+    Note first;
+
+    public static AnimationScriptLinkedList parseLinkedList(List<String> segments) {
+        ArrayList<AnimationSegment> segmentList = new ArrayList<>();
+        for (String segment : segments) {
+            AnimationSegment thisSegment = AnimationSegment.parseSegment(segment);
+            segmentList.add(thisSegment);
+        }
+        System.out.println("parseLinkedList: ");
+        System.out.println("  - from: " + segments);
+        System.out.println("  - to: " + segmentList);
+        return new AnimationScriptLinkedList(segmentList);
+    }
 
     public AnimationScriptLinkedList(ArrayList<AnimationSegment> segments) {
         Note previous = null;
@@ -38,9 +51,31 @@ public class AnimationScriptLinkedList {
         }
     }
 
+    public Note findLastNote() {
+        Note last = first;
+        while(last.next != null) last = last.next;
+        return last;
+    }
+
+    public void addEnd(AnimationSegment a) {
+        findLastNote().setNext(new Note(a));
+    }
+
     public AnimationSegment step() {
-        AnimationSegment result = current.value;
-        current = current.next;
+        AnimationSegment result = first.value;
+        first = first.next;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        Note current = first;
+        while (current != null) {
+            result.append(" -> ");
+            result.append(current.value.toString());
+            current = current.next;
+        }
+        return result.toString();
     }
 }

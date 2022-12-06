@@ -2,12 +2,12 @@ package saracraft.rainanimation.AnimationScript.AnimationScripts;
 
 import saracraft.rainanimation.AnimationScript.AnimationScript;
 
-public class MaterialScript implements AnimationScript {
+public class CustomModelDataScript implements AnimationScript {
     String[] param;
 
     @Override
     public String getIdentifier() {
-        return "material";
+        return "customModelData";
     }
 
     @Override

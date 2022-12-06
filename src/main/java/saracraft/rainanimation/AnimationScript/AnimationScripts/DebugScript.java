@@ -9,7 +9,7 @@ public class DebugScript implements AnimationScript {
     }
 
     @Override
-    public boolean run() {
+    public boolean run(String[] param) {
         return true;
     }
 }
