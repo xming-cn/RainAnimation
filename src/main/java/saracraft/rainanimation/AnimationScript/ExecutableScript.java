@@ -1,6 +1,7 @@
 package saracraft.rainanimation.AnimationScript;
 
 import org.apache.commons.lang.ArrayUtils;
+import saracraft.rainanimation.AnimationTask.AnimationTask;
 import saracraft.rainanimation.RainAnimation;
 
 public class ExecutableScript {
@@ -28,8 +29,8 @@ public class ExecutableScript {
         this.param = param;
     }
 
-    public boolean run() {
-        return this.script.run(param);
+    public boolean run(AnimationTask task) {
+        return this.script.run(task, param);
     }
 
     static public ExecutableScript parseScript(String script) {

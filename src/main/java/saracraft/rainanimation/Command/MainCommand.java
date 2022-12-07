@@ -5,18 +5,61 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import saracraft.rainanimation.AnimationTask.AnimationTaskPool;
 import saracraft.rainanimation.AnimationTemplate.AnimationTemplateManager;
+import saracraft.rainanimation.RainAnimation;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 public class MainCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        return false;
+        if (args.length == 0) {
+            printHelp(sender);
+            return true;
+        }
+        switch (args[0].toLowerCase(Locale.ROOT)) {
+            case "start" -> {
+                if (args.length < 4) {
+                    printHelp(sender);
+                    return true;
+                }
+                startSubCommand(sender, args);
+            }
+            case "end" -> {
+                if (args.length < 3) {
+                    printHelp(sender);
+                    return true;
+                }
+                endSubCommand(sender, args);
+            }
+        }
+
+        return true;
+    }
+
+    public void startSubCommand(CommandSender sender, String[] args) {
+        Entity target = RainAnimation.plugins.getServer().getEntity(UUID.fromString(args[1]));
+        LivingEntity living;
+        if (target instanceof LivingEntity) {
+            living = (LivingEntity) target;
+        } else {
+            sender.sendMessage("§c  target is not a LivingEntity!");
+            return;
+        }
+        EquipmentSlot slot = EquipmentSlot.valueOf(args[2].toUpperCase(Locale.ROOT));
+        AnimationTaskPool.getInstance().createTask(args[3], living, slot);
+    }
+
+    public void endSubCommand(CommandSender sender, String[] args) {
     }
 
     @Override

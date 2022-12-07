@@ -1,7 +1,9 @@
 package saracraft.rainanimation.AnimationScript;
 
+import saracraft.rainanimation.AnimationTask.AnimationTask;
+
 public interface AnimationScript {
     String getIdentifier();
 
-    boolean run(String[] param);
+    boolean run(AnimationTask task, String[] param);
 }

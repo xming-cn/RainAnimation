@@ -1,6 +1,7 @@
 package saracraft.rainanimation.AnimationScript.AnimationScripts;
 
 import saracraft.rainanimation.AnimationScript.AnimationScript;
+import saracraft.rainanimation.AnimationTask.AnimationTask;
 
 public class DebugScript implements AnimationScript {
     @Override
@@ -9,7 +10,7 @@ public class DebugScript implements AnimationScript {
     }
 
     @Override
-    public boolean run(String[] param) {
+    public boolean run(AnimationTask task, String[] param) {
         return true;
     }
 }

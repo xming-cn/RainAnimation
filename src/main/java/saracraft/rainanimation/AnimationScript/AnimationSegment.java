@@ -1,12 +1,14 @@
 package saracraft.rainanimation.AnimationScript;
 
+import saracraft.rainanimation.AnimationTask.AnimationTask;
+
 import java.util.ArrayList;
 
 public class AnimationSegment {
     private final ArrayList<ExecutableScript> scripts = new ArrayList<>();
-    public boolean run() {
+    public boolean run(AnimationTask task) {
         for (ExecutableScript script : scripts) {
-            if (!script.run()) {
+            if (!script.run(task)) {
                 return false;
             }
         }
