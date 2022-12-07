@@ -6,20 +6,21 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import saracraft.rainanimation.AnimationScript.AnimationScriptLinkedList;
+import saracraft.rainanimation.AnimationScript.AnimationSegment;
 
 import java.util.Objects;
 
 public class AnimationTask {
-    LivingEntity target;
-    EquipmentSlot slot;
+    private LivingEntity target;
+    private EquipmentSlot slot;
 
 
-    Integer waiting = 0;
+    private Integer waiting = 0;
 
-    Integer defaultInterval;
+    private Integer defaultInterval;
 
-    AnimationScriptLinkedList scriptProgress;
-    AnimationScriptLinkedList scriptEnd;
+    private AnimationScriptLinkedList scriptProgress;
+    private AnimationScriptLinkedList scriptEnd;
 
     public AnimationTask(LivingEntity target, EquipmentSlot slot) {
         this.target = target;
@@ -28,26 +29,28 @@ public class AnimationTask {
 
     public void tick() {
         this.waiting += 1;
-        if (this.waiting <= defaultInterval) {
+        if (this.waiting >= defaultInterval) {
             step();
             this.waiting = 0;
         }
     }
 
     public void step() {
-        if (Objects.nonNull(scriptProgress)) {
+        if (Objects.nonNull(scriptProgress.getFirst())) {
             stepProgress();
-        } else {
+        } else if (Objects.nonNull(scriptEnd.getFirst())) {
             stepEnd();
         }
     }
 
     public void stepProgress() {
-        scriptProgress.step().run(this);
+        AnimationSegment segment = scriptProgress.step();
+        if (Objects.nonNull(segment)) segment.run(this);
     }
 
     public void stepEnd() {
-        scriptEnd.step().run(this);
+        AnimationSegment segment = scriptEnd.step();
+        if (Objects.nonNull(segment)) segment.run(this);
     }
 
     public LivingEntity getTarget() {
@@ -100,6 +103,26 @@ public class AnimationTask {
         EntityEquipment equipment = target.getEquipment();
         if (Objects.isNull(equipment)) return new ItemStack(Material.AIR);
         return equipment.getItem(slot);
+    }
+
+    @Override
+    public String toString() {
+        return "AnimationTask{" +
+                "target=" + target +
+                ", slot=" + slot +
+                ", waiting=" + waiting +
+                ", defaultInterval=" + defaultInterval +
+                ", scriptProgress=" + scriptProgress +
+                ", scriptEnd=" + scriptEnd +
+                '}';
+    }
+
+    public Integer getWaiting() {
+        return waiting;
+    }
+
+    public void setWaiting(Integer waiting) {
+        this.waiting = waiting;
     }
 //    {
 //        UUID uuid = new UUID();

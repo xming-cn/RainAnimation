@@ -2,6 +2,7 @@ package saracraft.rainanimation.AnimationScript;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AnimationScriptLinkedList {
     private static class Note {
@@ -36,9 +37,6 @@ public class AnimationScriptLinkedList {
             AnimationSegment thisSegment = AnimationSegment.parseSegment(segment);
             segmentList.add(thisSegment);
         }
-        System.out.println("parseLinkedList: ");
-        System.out.println("  - from: " + segments);
-        System.out.println("  - to: " + segmentList);
         return new AnimationScriptLinkedList(segmentList);
     }
 
@@ -46,6 +44,7 @@ public class AnimationScriptLinkedList {
         Note previous = null;
         for (AnimationSegment segment : segments) {
             Note newNote = new Note(segment);
+            if (this.first == null) first = newNote;
             if (previous != null) previous.next = newNote;
             previous = newNote;
         }
@@ -62,6 +61,7 @@ public class AnimationScriptLinkedList {
     }
 
     public AnimationSegment step() {
+        if (Objects.isNull(first)) return null;
         AnimationSegment result = first.value;
         first = first.next;
         return result;
@@ -77,5 +77,13 @@ public class AnimationScriptLinkedList {
             current = current.next;
         }
         return result.toString();
+    }
+
+    public Note getFirst() {
+        return first;
+    }
+
+    public void setFirst(Note first) {
+        this.first = first;
     }
 }

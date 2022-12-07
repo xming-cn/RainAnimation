@@ -18,4 +18,8 @@ public class MaterialScript implements AnimationScript {
         task.setItem(item);
         return true;
     }
+    @Override
+    public String toString() {
+        return "MaterialScript";
+    }
 }

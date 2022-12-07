@@ -73,7 +73,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
                 }
                 yield List.of();
             }
-            case 3 -> List.of("HAT", "HAND");
+            case 3 -> List.of("HEAD", "HAND");
             case 4 -> AnimationTemplateManager.getInst().getTemplates().keySet().stream().toList();
             default -> List.of();
         };
@@ -83,11 +83,11 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("");
         sender.sendMessage("§dRain Animation Help");
         sender.sendMessage("");
-        sender.sendMessage("  §f/ra start <盔甲架UUID> <HAT/HAND> <动画ID>");
+        sender.sendMessage("  §f/ra start <盔甲架UUID> <HEAD/HAND> <动画ID>");
         sender.sendMessage("  §7为指定盔甲架开始一段动画");
         sender.sendMessage("");
-        sender.sendMessage("  §f/ra stop <盔甲架UUID> <HAT/HAND>");
-        sender.sendMessage("  §7使指定盔甲架停止动画");
-        sender.sendMessage("");
+//        sender.sendMessage("  §f/ra stop <盔甲架UUID> <HEAD/HAND>");
+//        sender.sendMessage("  §7使指定盔甲架停止动画");
+//        sender.sendMessage("");
     }
 }

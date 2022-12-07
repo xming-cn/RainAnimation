@@ -13,4 +13,9 @@ public class DebugScript implements AnimationScript {
     public boolean run(AnimationTask task, String[] param) {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "DebugScript";
+    }
 }

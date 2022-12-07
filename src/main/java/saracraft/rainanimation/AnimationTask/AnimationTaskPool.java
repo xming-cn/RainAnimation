@@ -29,6 +29,10 @@ public class AnimationTaskPool {
         tasks.add(task);
     }
 
+    public void removeTask(AnimationTask task) {
+        tasks.remove(task);
+    }
+
     public void tick() {
         if (tasks.size() == 0) {
             return;
@@ -36,5 +40,6 @@ public class AnimationTaskPool {
         for (AnimationTask task : tasks) {
             task.tick();
         }
+        tasks.removeIf( (AnimationTask task) -> Objects.isNull(task.getScriptProgress().getFirst()) && Objects.isNull(task.getScriptEnd().getFirst()));
     }
 }

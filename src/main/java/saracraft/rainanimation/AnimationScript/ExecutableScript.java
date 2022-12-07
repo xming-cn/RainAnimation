@@ -1,6 +1,5 @@
 package saracraft.rainanimation.AnimationScript;
 
-import org.apache.commons.lang.ArrayUtils;
 import saracraft.rainanimation.AnimationTask.AnimationTask;
 import saracraft.rainanimation.RainAnimation;
 
@@ -47,6 +46,10 @@ public class ExecutableScript {
 
     @Override
     public String toString() {
-        return "Script{" + script + "-" + ArrayUtils.toString(param) + '}';
+        StringBuilder scriptStr = new StringBuilder();
+        for (int i = 0; i < param.length && param[i] != null; i++) {
+            scriptStr.append(param[i]).append(",");
+        }
+        return "Script{" + script + "-" + scriptStr.substring(0, scriptStr.length() - 1) + '}';
     }
 }

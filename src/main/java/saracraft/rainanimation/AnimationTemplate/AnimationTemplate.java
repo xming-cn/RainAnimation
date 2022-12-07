@@ -8,6 +8,7 @@ import saracraft.rainanimation.AnimationScript.AnimationScriptLinkedList;
 import saracraft.rainanimation.AnimationTask.AnimationTask;
 
 import java.io.File;
+import java.util.List;
 
 public class AnimationTemplate {
     String identifier;
@@ -17,8 +18,8 @@ public class AnimationTemplate {
 
     Integer defaultInterval;
 
-    AnimationScriptLinkedList scriptProgress;
-    AnimationScriptLinkedList scriptEnd;
+    List<String> scriptProgress;
+    List<String> scriptEnd;
 
     public AnimationTemplate(String identifier, String path) {
         this.identifier = identifier;
@@ -30,15 +31,15 @@ public class AnimationTemplate {
         File configFile = new File(this.path);
         this.config = YamlConfiguration.loadConfiguration(configFile);
         this.defaultInterval = this.config.getInt("Interval");
-        this.scriptProgress = AnimationScriptLinkedList.parseLinkedList(this.config.getStringList("Progress"));
-        this.scriptEnd = AnimationScriptLinkedList.parseLinkedList(this.config.getStringList("Progress"));
+        this.scriptProgress = this.config.getStringList("Progress");
+        this.scriptEnd = this.config.getStringList("End");
     }
 
     public AnimationTask generateTask(LivingEntity target, EquipmentSlot slot) {
         AnimationTask result = new AnimationTask(target, slot);
         result.setDefaultInterval(defaultInterval);
-        result.setScriptProgress(scriptProgress);
-        result.setScriptEnd(scriptEnd);
+        result.setScriptProgress(AnimationScriptLinkedList.parseLinkedList(scriptProgress));
+        result.setScriptEnd(AnimationScriptLinkedList.parseLinkedList(scriptEnd));
         return result;
     }
 

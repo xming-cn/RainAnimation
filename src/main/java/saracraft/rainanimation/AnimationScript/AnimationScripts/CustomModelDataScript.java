@@ -1,5 +1,6 @@
 package saracraft.rainanimation.AnimationScript.AnimationScripts;
 
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import saracraft.rainanimation.AnimationScript.AnimationScript;
@@ -14,10 +15,19 @@ public class CustomModelDataScript implements AnimationScript {
     @Override
     public boolean run(AnimationTask task, String[] param) {
         ItemStack item = task.getItem();
-        ItemMeta meta = item.getItemMeta();
+        ItemMeta meta;
+        if (item.hasItemMeta())
+            meta = item.getItemMeta();
+        else
+            meta = Bukkit.getItemFactory().getItemMeta(item.getType());
         meta.setCustomModelData(Integer.parseInt(param[0]));
         item.setItemMeta(meta);
         task.setItem(item);
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomModelDataScript";
     }
 }
