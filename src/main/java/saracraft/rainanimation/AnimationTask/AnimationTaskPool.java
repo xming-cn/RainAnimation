@@ -29,6 +29,15 @@ public class AnimationTaskPool {
         tasks.add(task);
     }
 
+    public AnimationTask findTask(LivingEntity target, EquipmentSlot slot) {
+        for (AnimationTask task : tasks) {
+            if (!task.getTarget().equals(target)) continue;
+            if (!task.getSlot().equals(slot)) continue;
+            return task;
+        }
+        return null;
+    }
+
     public void removeTask(AnimationTask task) {
         tasks.remove(task);
     }

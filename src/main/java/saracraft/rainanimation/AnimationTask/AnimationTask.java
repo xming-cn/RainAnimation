@@ -27,6 +27,10 @@ public class AnimationTask {
         this.slot = slot;
     }
 
+    public void end() {
+        scriptProgress.end();
+    }
+
     public void tick() {
         this.waiting += 1;
         if (this.waiting >= defaultInterval) {

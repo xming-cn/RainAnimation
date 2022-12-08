@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class AnimationScriptLinkedList {
+
     private static class Note {
         Note next;
         AnimationSegment value;
@@ -85,5 +86,8 @@ public class AnimationScriptLinkedList {
 
     public void setFirst(Note first) {
         this.first = first;
+    }
+    public void end() {
+        this.first = null;
     }
 }

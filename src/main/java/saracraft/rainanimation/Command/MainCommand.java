@@ -60,6 +60,16 @@ public class MainCommand implements CommandExecutor, TabCompleter {
     }
 
     public void endSubCommand(CommandSender sender, String[] args) {
+        Entity target = RainAnimation.plugins.getServer().getEntity(UUID.fromString(args[1]));
+        LivingEntity living;
+        if (target instanceof LivingEntity) {
+            living = (LivingEntity) target;
+        } else {
+            sender.sendMessage("§c  target is not a LivingEntity!");
+            return;
+        }
+        EquipmentSlot slot = EquipmentSlot.valueOf(args[2].toUpperCase(Locale.ROOT));
+        AnimationTaskPool.getInstance().findTask(living, slot).end();
     }
 
     @Override
@@ -86,8 +96,8 @@ public class MainCommand implements CommandExecutor, TabCompleter {
         sender.sendMessage("  §f/ra start <盔甲架UUID> <HEAD/HAND> <动画ID>");
         sender.sendMessage("  §7为指定盔甲架开始一段动画");
         sender.sendMessage("");
-//        sender.sendMessage("  §f/ra stop <盔甲架UUID> <HEAD/HAND>");
-//        sender.sendMessage("  §7使指定盔甲架停止动画");
-//        sender.sendMessage("");
+        sender.sendMessage("  §f/ra stop <盔甲架UUID> <HEAD/HAND>");
+        sender.sendMessage("  §7使指定盔甲架停止动画");
+        sender.sendMessage("");
     }
 }
