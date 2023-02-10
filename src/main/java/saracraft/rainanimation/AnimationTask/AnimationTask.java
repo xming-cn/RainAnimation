@@ -34,8 +34,8 @@ public class AnimationTask {
     public void tick() {
         this.waiting += 1;
         if (this.waiting >= defaultInterval) {
-            step();
             this.waiting = 0;
+            step();
         }
     }
 
@@ -125,13 +125,11 @@ public class AnimationTask {
         return waiting;
     }
 
+    public void delay(Integer delay) {
+        this.waiting -= delay;
+    }
+
     public void setWaiting(Integer waiting) {
         this.waiting = waiting;
     }
-//    {
-//        UUID uuid = new UUID();
-//        if (Bukkit.getServer().getEntity(uuid) instanceof ArmorStand armorStand) {
-//            armorStand.getItem(EquipmentSlot.CHEST)
-//        }
-//    }
 }

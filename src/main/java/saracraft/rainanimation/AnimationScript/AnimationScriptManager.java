@@ -3,8 +3,10 @@ package saracraft.rainanimation.AnimationScript;
 import saracraft.rainanimation.AnimationScript.AnimationScripts.CustomModelDataScript;
 import saracraft.rainanimation.AnimationScript.AnimationScripts.DebugScript;
 import saracraft.rainanimation.AnimationScript.AnimationScripts.MaterialScript;
+import saracraft.rainanimation.AnimationScript.AnimationScripts.WaitScript;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 
 public class AnimationScriptManager {
     private static final AnimationScriptManager inst = new AnimationScriptManager();
@@ -13,7 +15,7 @@ public class AnimationScriptManager {
     public static AnimationScriptManager getInstance() {
         return inst;
     }
-    ArrayList<AnimationScript> scripts = new ArrayList<>(); {
+    HashMap<String, AnimationScript> scripts = new HashMap<>(); {
         registerBuiltInScript();
     }
 
@@ -21,22 +23,18 @@ public class AnimationScriptManager {
         registerScript(new DebugScript());
         registerScript(new MaterialScript());
         registerScript(new CustomModelDataScript());
+        registerScript(new WaitScript());
     }
 
     public AnimationScript getScript(String identifier) {
-        for (AnimationScript script : scripts) {
-            if (script.getIdentifier().equalsIgnoreCase(identifier)) {
-                return script;
-            }
-        }
-        return null;
+        return scripts.getOrDefault(identifier.toLowerCase(Locale.ROOT), null);
     }
 
     private void registerScript(AnimationScript script) {
-        scripts.add(script);
+        scripts.put(script.getIdentifier().toLowerCase(Locale.ROOT), script);
     }
 
     private void unregisterScript(String identifier) {
-        scripts.removeIf(script -> script.getIdentifier().equalsIgnoreCase(identifier));
+        scripts.remove(identifier.toLowerCase(Locale.ROOT));
     }
 }
