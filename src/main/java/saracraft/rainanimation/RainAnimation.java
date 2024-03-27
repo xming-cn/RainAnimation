@@ -8,6 +8,7 @@ import saracraft.rainanimation.AnimationTask.AnimationTaskPool;
 import saracraft.rainanimation.AnimationTemplate.AnimationTemplateManager;
 import saracraft.rainanimation.Command.MainCommand;
 
+import java.io.File;
 import java.util.Objects;
 
 public final class RainAnimation extends JavaPlugin {
@@ -19,9 +20,10 @@ public final class RainAnimation extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         getLogger().info("Plugin Enable!");
+        getLogger().info("this plugin created by xming(qq:1360197420)");
         plugins = this;
 
-        AnimationTemplateManager.getInst().registerAll(RainAnimation.plugins.getDataFolder().getPath()  + "/animations");
+        AnimationTemplateManager.getInst().registerAll(RainAnimation.plugins.getDataFolder().getPath()  + File.separator + "animations");
 
         Objects.requireNonNull(Bukkit.getPluginCommand("RainAnimation")).setExecutor(new MainCommand());
 

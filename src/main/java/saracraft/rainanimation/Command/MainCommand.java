@@ -7,7 +7,6 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import saracraft.rainanimation.AnimationTask.AnimationTaskPool;
@@ -55,8 +54,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c  target is not a LivingEntity!");
             return;
         }
-        EquipmentSlot slot = EquipmentSlot.valueOf(args[2].toUpperCase(Locale.ROOT));
-        AnimationTaskPool.getInstance().createTask(args[3], living, slot);
+        AnimationTaskPool.getInstance().createTask(args[3], living);
     }
 
     public void endSubCommand(CommandSender sender, String[] args) {
@@ -68,8 +66,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage("§c  target is not a LivingEntity!");
             return;
         }
-        EquipmentSlot slot = EquipmentSlot.valueOf(args[2].toUpperCase(Locale.ROOT));
-        AnimationTaskPool.getInstance().findTask(living, slot).end();
+        AnimationTaskPool.getInstance().findTask(living).end();
     }
 
     @Override
@@ -83,8 +80,7 @@ public class MainCommand implements CommandExecutor, TabCompleter {
                 }
                 yield List.of();
             }
-            case 3 -> List.of("HEAD", "HAND");
-            case 4 -> AnimationTemplateManager.getInst().getTemplates().keySet().stream().toList();
+            case 3 -> AnimationTemplateManager.getInst().getTemplates().keySet().stream().toList();
             default -> List.of();
         };
     }

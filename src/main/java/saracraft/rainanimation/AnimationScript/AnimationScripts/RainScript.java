@@ -1,21 +1,25 @@
 package saracraft.rainanimation.AnimationScript.AnimationScripts;
 
+import org.bukkit.entity.LivingEntity;
 import saracraft.rainanimation.AnimationScript.AnimationScript;
 import saracraft.rainanimation.AnimationTask.AnimationTask;
 
-public class WaitScript  implements AnimationScript {
+public class RainScript implements AnimationScript {
+
     @Override
     public String getIdentifier() {
-        return "material";
+        return "rain";
     }
 
     @Override
     public boolean run(AnimationTask task, String[] param) {
-        task.delay(Integer.parseInt(param[0]));
+        LivingEntity living = task.getTarget();
+        living.remove();
         return true;
     }
+
     @Override
     public String toString() {
-        return "WaitScript";
+        return "RainScript";
     }
 }

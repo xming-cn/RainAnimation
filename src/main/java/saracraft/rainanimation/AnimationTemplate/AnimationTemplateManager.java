@@ -1,6 +1,6 @@
 package saracraft.rainanimation.AnimationTemplate;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import saracraft.rainanimation.RainAnimation;
 
 import javax.annotation.Nullable;

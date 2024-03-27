@@ -7,13 +7,12 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import saracraft.rainanimation.AnimationScript.AnimationScriptLinkedList;
 import saracraft.rainanimation.AnimationScript.AnimationSegment;
+import saracraft.rainanimation.AnimationTemplate.AnimationTemplate;
 
 import java.util.Objects;
 
 public class AnimationTask {
     private LivingEntity target;
-    private EquipmentSlot slot;
-
 
     private Integer waiting = 0;
 
@@ -21,10 +20,10 @@ public class AnimationTask {
 
     private AnimationScriptLinkedList scriptProgress;
     private AnimationScriptLinkedList scriptEnd;
+    private AnimationTemplate.AnimationType type;
 
-    public AnimationTask(LivingEntity target, EquipmentSlot slot) {
+    public AnimationTask(LivingEntity target) {
         this.target = target;
-        this.slot = slot;
     }
 
     public void end() {
@@ -65,14 +64,6 @@ public class AnimationTask {
         this.target = target;
     }
 
-    public EquipmentSlot getSlot() {
-        return slot;
-    }
-
-    public void setSlot(EquipmentSlot slot) {
-        this.slot = slot;
-    }
-
     public Integer getDefaultInterval() {
         return defaultInterval;
     }
@@ -100,20 +91,27 @@ public class AnimationTask {
     public void setItem(ItemStack item) {
         EntityEquipment equipment = target.getEquipment();
         if (Objects.isNull(equipment)) return;
-        equipment.setItem(slot, item);
+        switch (type) {
+            case HEAD -> equipment.setHelmet(item);
+            case MAIN_HAND -> equipment.setItem(EquipmentSlot.HAND, item);
+        }
     }
 
     public ItemStack getItem() {
         EntityEquipment equipment = target.getEquipment();
         if (Objects.isNull(equipment)) return new ItemStack(Material.AIR);
-        return equipment.getItem(slot);
+        return switch (type) {
+            case HEAD -> equipment.getHelmet();
+            case MAIN_HAND -> equipment.getItem(EquipmentSlot.HAND);
+            default -> new ItemStack(Material.AIR);
+        };
     }
 
     @Override
     public String toString() {
         return "AnimationTask{" +
                 "target=" + target +
-                ", slot=" + slot +
+                ", type=" + type +
                 ", waiting=" + waiting +
                 ", defaultInterval=" + defaultInterval +
                 ", scriptProgress=" + scriptProgress +
@@ -131,5 +129,9 @@ public class AnimationTask {
 
     public void setWaiting(Integer waiting) {
         this.waiting = waiting;
+    }
+
+    public void setType(AnimationTemplate.AnimationType type) {
+        this.type = type;
     }
 }
